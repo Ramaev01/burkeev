@@ -4,12 +4,13 @@ room.title("Калькулятор")
 input_text = StringVar()
 expression = ""
 
-e = Entry(room, width=50, fg="black", bg="white", borderwidth=5).grid(row=0, column=0, columnspan=4)
-
+e = Entry(room, width=50, textvariable=input_text, fg="black", bg="white", borderwidth=5)
+e.grid(row=0, column=0, columnspan=4)
+    
 def button_click(number):
     global expression
-    second = expression + str(number)
-    input_text.set(second)
+    expression += str(number)  
+    input_text.set(expression)  
 
 def bt_clear():
     global expression
@@ -18,9 +19,13 @@ def bt_clear():
 
 def bt_equal():
     global expression
-    result = str(eval(expression))
-    input_text.set(result)
-    expression = ""
+    try:
+        result = str(eval(expression))
+        input_text.set(result)
+        expression = result  
+    except Exception as e:
+        input_text.set("Error")
+        expression = ""
 
 
 #первая строка
